@@ -6,6 +6,7 @@ import { ContactsTab } from './components/ContactsTab';
 import { WritingTab } from './components/WritingTab';
 import { FloatingActionButton } from './components/FloatingActionButton';
 import { AddFriendModal } from './components/AddFriendModal';
+import { Sidebar } from './components/Sidebar';
 import { BrushType, ChatSession, Friend, FriendRequest, Message, User } from './types';
 import { CURRENT_USER, MOCK_FRIENDS, MOCK_REQUESTS, MOCK_SESSIONS } from './data/mock';
 
@@ -140,13 +141,22 @@ export default function App() {
   }
 
   return (
-    <div className="h-screen w-full flex flex-col bg-[#f8f8f8] overflow-hidden selection:bg-black selection:text-white">
-      <div className="landscape:hidden">
-        <Header title={headerTitle} status={headerStatus} />
+    <div className="h-screen w-full flex bg-[#f8f8f8] overflow-hidden selection:bg-black selection:text-white">
+      {/* PC Sidebar */}
+      <div className="hidden md:flex">
+        <Sidebar 
+          currentTab={currentTab} 
+          onTabChange={handleTabChange} 
+          unreadCount={totalUnread} 
+        />
       </div>
-      
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col relative w-full max-w-lg mx-auto h-full bg-white shadow-[0_0_50px_-12px_rgba(0,0,0,0.1)] pt-16 pb-24 landscape:pt-0 landscape:pb-0 landscape:max-w-none overflow-hidden transition-all duration-500 ease-in-out">
+
+      <div className="flex-1 flex flex-col h-full relative overflow-hidden">
+        {/* Header (Top Bar) */}
+        <Header title={headerTitle} status={headerStatus} />
+        
+        {/* Main Content Area */}
+        <div className="flex-1 flex flex-col relative w-full max-w-lg mx-auto h-full bg-white shadow-[0_0_50px_-12px_rgba(0,0,0,0.1)] pb-24 md:pb-0 md:max-w-none overflow-hidden transition-all duration-500 ease-in-out">
         
         {currentTab === 'messages' && (
           <MessagesTab 
@@ -182,11 +192,11 @@ export default function App() {
         {(currentTab === 'messages' || currentTab === 'contacts') && (
           <FloatingActionButton onClick={handleNewChat} />
         )}
-
       </div>
+    </div>
 
-      {/* Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 w-full z-50 landscape:hidden">
+    {/* Mobile Bottom Navigation */}
+      <div className="fixed bottom-0 left-0 w-full z-50 md:hidden">
         <BottomNav 
           currentTab={currentTab} 
           onTabChange={handleTabChange} 
