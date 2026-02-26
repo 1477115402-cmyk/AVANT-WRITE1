@@ -133,15 +133,15 @@ export default function App() {
   let headerTitle = 'Avant Write';
   let headerStatus = undefined;
 
-  if (currentTab === 'messages') headerTitle = '消息';
-  if (currentTab === 'contacts') headerTitle = '联系人';
+  if (currentTab === 'messages') headerTitle = 'Index';
+  if (currentTab === 'contacts') headerTitle = 'People';
   if (currentTab === 'writing' && activePartner) {
     headerTitle = activePartner.name;
-    headerStatus = activePartner.status === 'online' ? '在线' : '离线';
+    headerStatus = activePartner.status === 'online' ? 'Online' : 'Offline';
   }
 
   return (
-    <div className="h-screen w-full flex bg-[#f8f8f8] overflow-hidden selection:bg-black selection:text-white">
+    <div className="h-screen w-full flex bg-white overflow-hidden selection:bg-black selection:text-white">
       {/* PC Sidebar */}
       <div className="hidden md:flex">
         <Sidebar 

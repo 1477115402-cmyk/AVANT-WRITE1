@@ -15,28 +15,37 @@ export const Header: React.FC<HeaderProps> = ({ title = 'Avant Write', status })
   }, []);
 
   return (
-    <header className="w-full h-16 flex items-center justify-between px-6 z-40 bg-white/80 backdrop-blur-md border-b border-black/[0.03] shrink-0">
+    <header className="w-full h-20 flex items-center justify-between px-10 z-40 bg-white border-b border-black/[0.05] shrink-0">
       <div className="flex flex-col justify-center">
-        <div className="text-black font-bold tracking-tight text-lg leading-none">
+        <div className="text-black font-display font-bold tracking-tight text-2xl uppercase">
           {title}
         </div>
         {status && (
-          <div className="text-[10px] text-black/40 font-bold uppercase tracking-widest mt-1">
-            {status}
+          <div className="flex items-center space-x-2 mt-1">
+            <div className="w-1.5 h-1.5 rounded-full bg-black animate-pulse" />
+            <div className="text-[9px] text-black/40 font-bold uppercase tracking-[0.2em]">
+              {status}
+            </div>
           </div>
         )}
       </div>
       
-      <div className="flex items-center space-x-4">
-        <div className="text-black/20 font-mono text-xs font-bold uppercase tracking-widest">
-          {time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+      <div className="flex items-center space-x-12">
+        <div className="hidden md:flex flex-col items-end">
+          <div className="text-[9px] text-black/30 font-bold uppercase tracking-[0.3em] mb-1">
+            Current Time
+          </div>
+          <div className="text-black font-display font-medium text-lg tracking-tight">
+            {time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+          </div>
         </div>
-        <div className="hidden md:flex items-center space-x-2">
-          <button className="p-2 rounded-xl text-black/40 hover:bg-black/5 hover:text-black transition-all">
-            <Bell size={18} />
+        
+        <div className="flex items-center space-x-4">
+          <button className="w-10 h-10 flex items-center justify-center rounded-full border border-black/5 hover:bg-black hover:text-white transition-all duration-500">
+            <Bell size={16} strokeWidth={1.5} />
           </button>
-          <button className="p-2 rounded-xl text-black/40 hover:bg-black/5 hover:text-black transition-all">
-            <Settings size={18} />
+          <button className="w-10 h-10 flex items-center justify-center rounded-full border border-black/5 hover:bg-black hover:text-white transition-all duration-500">
+            <Settings size={16} strokeWidth={1.5} />
           </button>
         </div>
       </div>

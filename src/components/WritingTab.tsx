@@ -47,54 +47,57 @@ export const WritingTab: React.FC<WritingTabProps> = ({
 
   if (!partner) {
     return (
-      <div className="flex-1 flex items-center justify-center text-[var(--color-ink-light)] font-serif opacity-50">
-        请选择一个会话
+      <div className="flex-1 flex flex-col items-center justify-center bg-white">
+        <div className="font-display font-bold text-8xl text-black/[0.02] absolute inset-0 flex items-center justify-center pointer-events-none uppercase tracking-tighter">
+          Avant Write
+        </div>
+        <p className="relative z-10 text-[10px] font-bold uppercase tracking-[0.4em] text-black/20">Select a Draft to Begin</p>
       </div>
     );
   }
 
   return (
-    <div className="flex-1 flex flex-col relative w-full h-full overflow-hidden">
+    <div className="flex-1 flex flex-col relative w-full h-full overflow-hidden bg-white">
       {/* Top Controls */}
-      <div className="absolute top-6 left-6 right-6 z-50 flex justify-between pointer-events-none">
+      <div className="absolute top-8 left-8 right-8 z-50 flex justify-between pointer-events-none">
         {/* Test Mode Toggle (Left) */}
         <button
           onClick={() => setTestMode(!testMode)}
-          className={`pointer-events-auto flex items-center space-x-2 px-4 py-2 rounded-2xl border transition-all duration-300 ${
+          className={`pointer-events-auto flex items-center space-x-3 px-6 py-3 rounded-full border transition-all duration-500 ${
             testMode
-              ? 'bg-black text-white border-black shadow-xl'
-              : 'bg-white/80 backdrop-blur-md border-black/5 text-black/40 hover:text-black'
+              ? 'bg-black text-white border-black shadow-2xl scale-105'
+              : 'bg-white/80 backdrop-blur-md border-black/5 text-black/40 hover:text-black hover:border-black/20'
           }`}
         >
-          <FlaskConical size={14} />
-          <span className="text-[10px] font-bold uppercase tracking-widest">{testMode ? '测试中' : '共写测试'}</span>
+          <FlaskConical size={14} strokeWidth={1.5} />
+          <span className="text-[9px] font-bold uppercase tracking-[0.2em]">{testMode ? 'Lab Active' : 'Lab Mode'}</span>
         </button>
 
         {/* Co-write Toggle (Right) */}
         <button
           onClick={() => setIsCoWriting(!isCoWriting)}
-          className={`pointer-events-auto flex items-center space-x-2 px-4 py-2 rounded-2xl border transition-all duration-300 ${
+          className={`pointer-events-auto flex items-center space-x-3 px-6 py-3 rounded-full border transition-all duration-500 ${
             isCoWriting
-              ? 'bg-black text-white border-black shadow-xl'
-              : 'bg-white/80 backdrop-blur-md border-black/5 text-black/40 hover:text-black'
+              ? 'bg-black text-white border-black shadow-2xl scale-105'
+              : 'bg-white/80 backdrop-blur-md border-black/5 text-black/40 hover:text-black hover:border-black/20'
           }`}
         >
-          <Users size={14} />
-          <span className="text-[10px] font-bold uppercase tracking-widest">{isCoWriting ? '共写中' : '共写模式'}</span>
+          <Users size={14} strokeWidth={1.5} />
+          <span className="text-[9px] font-bold uppercase tracking-[0.2em]">{isCoWriting ? 'Co-Drafting' : 'Solo Mode'}</span>
         </button>
       </div>
 
       {/* Top Section: History (30%) */}
-      <div className={`relative overflow-hidden border-b border-black/5 bg-white shrink-0 transition-all duration-700 ease-in-out ${
-        isCoWriting ? 'h-0 opacity-0' : 'h-[30%] opacity-100'
+      <div className={`relative overflow-hidden border-b border-black/[0.05] bg-white shrink-0 transition-all duration-1000 cubic-bezier(0.23, 1, 0.32, 1) ${
+        isCoWriting ? 'h-0 opacity-0' : 'h-[35%] opacity-100'
       } landscape:hidden`}>
-        <div className="absolute top-0 left-0 w-full h-8 bg-gradient-to-b from-black/[0.02] to-transparent z-10 pointer-events-none" />
+        <div className="absolute top-0 left-0 w-full h-12 bg-gradient-to-b from-white to-transparent z-10 pointer-events-none" />
         <HistoryList messages={messages} currentUser={currentUser} partner={partner} />
       </div>
 
       {/* Bottom Section: Canvas (70% or 100%) */}
-      <div className={`relative bg-white z-10 transition-all duration-700 ease-in-out ${
-        isCoWriting ? 'h-full' : 'h-[70%]'
+      <div className={`relative bg-white z-10 transition-all duration-1000 cubic-bezier(0.23, 1, 0.32, 1) ${
+        isCoWriting ? 'h-full' : 'h-[65%]'
       } landscape:h-full flex-1`}>
          <CanvasBoard 
             ref={canvasRef} 
@@ -105,12 +108,12 @@ export const WritingTab: React.FC<WritingTabProps> = ({
           />
           
           {/* Watermark */}
-          <div className={`absolute top-20 left-6 text-black opacity-[0.03] font-serif pointer-events-none select-none text-4xl writing-mode-vertical transition-opacity duration-700 ${isCoWriting ? 'opacity-[0.05]' : 'opacity-[0.03]'}`}>
-            {isCoWriting ? `${partner.name} · 共写` : `${partner.name} · 独写`}
+          <div className={`absolute top-24 left-10 text-black opacity-[0.02] font-display font-bold pointer-events-none select-none text-7xl uppercase tracking-tighter transition-all duration-1000 ${isCoWriting ? 'opacity-[0.05] scale-110' : 'opacity-[0.02]'}`}>
+            {isCoWriting ? 'Co-Draft' : 'Solo'}
           </div>
 
           {/* Controls Overlay at Bottom */}
-          <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-[var(--color-paper)] via-[var(--color-paper)]/80 to-transparent pt-8 pb-2 pointer-events-none">
+          <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-white via-white/90 to-transparent pt-12 pb-6 pointer-events-none">
             <ControlBar
               currentBrush={currentBrush}
               brushSize={brushSize}
